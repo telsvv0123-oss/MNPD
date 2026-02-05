@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MNPD - Монголын Үндэсний Цагдаагийн Департамент</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --secondary: #ff3d00;
+            --dark-bg: #0a0a0a;
+            --dark-card: #111111;
+            --dark-border: #222222;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent: #00c853;
+            --danger: #f44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-text span {
+            color: var(--primary);
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section - Тусгай хүчний зураг */
+        .hero {
+            padding-top: 150px;
+            padding-bottom: 100px;
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9)),
+                url('https://images.unsplash.com/photo-1584017911766-d451b3d0e843?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80&blend=000000&blend-mode=multiply');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(26, 115, 232, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 61, 0, 0.05) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: var(--text-secondary);
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.8);
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            z-index: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.7s;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--dark-border);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .section-title p {
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Units Section - Tactical Background */
+        #units {
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(26, 115, 232, 0.03) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 61, 0, 0.02) 0%, transparent 20%);
+        }
+        
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .unit-card {
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid var(--dark-border);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .unit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background-color: var(--primary);
+            transition: height 0.3s;
+        }
+        
+        .unit-card:hover::before {
+            height: 100%;
+        }
+        
+        .unit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+        
+        .unit-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .unit-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .unit-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        /* Ranks Section - Military Style */
+        #ranks {
+            background-color: #080808;
+            background-image: 
+                linear-gradient(to right, rgba(10, 10, 10, 0.9) 0%, rgba(10, 10, 10, 0.9) 100%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230d47a1' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .ranks-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid var(--dark-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .ranks-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        .ranks-table thead {
+            background-color: #0a0a0a;
+            background-image: linear-gradient(to right, var(--primary-dark), #0a0a0a);
+        }
+        
+        .ranks-table th {
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            color: white;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .ranks-table tbody tr {
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .ranks-table tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        
+        .ranks-table tbody tr:hover {
+            background-color: rgba(26, 115, 232, 0.1);
+        }
+        
+        .ranks-table td {
+            padding: 18px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .rank-code {
+            display: inline-block;
+            background-color: rgba(26, 115, 232, 0.2);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-family: 'Roboto Mono', monospace;
+            border: 1px solid rgba(26, 115, 232, 0.3);
+        }
+        
+        /* Links Section - Нэгжүүдийн холбоос */
+        #links {
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 30% 20%, rgba(26, 115, 232, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 70% 80%, rgba(255, 61, 0, 0.03) 0%, transparent 40%);
+        }
+        
+        .links-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .link-card {
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid var(--dark-border);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .link-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
+        }
+        
+        .link-card:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .link-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        
+        .link-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .link-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            flex-grow: 1;
+            font-size: 0.9rem;
+        }
+        
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(26, 115, 232, 0.1);
+            color: var(--primary);
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 1px solid rgba(26, 115, 232, 0.2);
+        }
+        
+        .link-btn:hover {
+            background-color: rgba(26, 115, 232, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Social Media Section */
+        #social {
+            background-color: #090909;
+            padding: 60px 0;
+        }
+        
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .social-card {
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            padding: 30px;
+            border: 1px solid var(--dark-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .social-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .social-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 30px;
+        }
+        
+        .tiktok-icon {
+            background: linear-gradient(135deg, #000000, #333333);
+        }
+        
+        .youtube-icon {
+            background: linear-gradient(135deg, #000000, #CC0000);
+        }
+        
+        .discord-icon {
+            background: linear-gradient(135deg, #000000, #4a5fc1);
+        }
+        
+        .roblox-icon {
+            background: linear-gradient(135deg, #000000, #9c3b9c);
+        }
+        
+        .social-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .social-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        /* Leadership Section */
+        #leadership {
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(26, 115, 232, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 61, 0, 0.03) 0%, transparent 40%);
+        }
+        
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .leader-card {
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--dark-border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .leader-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .leader-image {
+            height: 200px;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .leader-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(26, 115, 232, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .leader-info {
+            padding: 25px;
+        }
+        
+        .leader-rank {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .leader-name {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .leader-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .leader-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #050505;
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--dark-border);
+            background-image: 
+                linear-gradient(to bottom, rgba(5, 5, 5, 0.9), rgba(5, 5, 5, 1)),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%231a73e8' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .footer-logo span {
+            color: var(--primary);
+        }
+        
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: var(--dark-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--dark-border);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--dark-card);
+                padding: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s;
+                border-bottom: 1px solid var(--dark-border);
+            }
+            
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero {
+                padding-top: 120px;
+                padding-bottom: 80px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .links-container, .social-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>MN<span>PD</span></h1>
+                    <p>Монголын Үндэсний Цагдаагийн Департамент</p>
+                </div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home">Нүүр</a></li>
+                    <li><a href="#units">Нэгжүүд</a></li>
+                    <li><a href="#ranks">Цол зэрэг</a></li>
+                    <li><a href="#leadership">Удирдлага</a></li>
+                    <li><a href="#links">Холбоосууд</a></li>
+                    <li><a href="#social">Сошиал медиа</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>Монголын Үндэсний Цагдаагийн Департамент</h2>
+            <p>Тусгай хүчний бэлэн байдал, стратегийн давуу тал. Олон улсын Роблокс тоглоом дэх Монголын цагдаагийн элит хүчин.</p>
+            <div class="cta-buttons">
+                <a href="https://www.roblox.com/communities/13179941/Mongolian-National-Police-Department-MNPD#!/about" class="btn btn-primary" target="_blank">
+                    <i class="fab fa-roblox"></i> Үндсэн групп
+                </a>
+                <a href="https://discord.gg/EGWw4pc3" class="btn btn-secondary" target="_blank">
+                    <i class="fab fa-discord"></i> Discord сервер
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Units Section -->
+    <section id="units">
+        <div class="container">
+            <div class="section-title">
+                <h2>Тусгай хүчний нэгжүүд</h2>
+                <p>MNPD-ийн элит тактик нэгжүүд</p>
+            </div>
+            
+            <div class="units-grid">
+                <div class="unit-card">
+                    <div class="unit-icon">
+                        <i class="fas fa-fist-raised"></i>
+                    </div>
+                    <h3>MDF - Mongolian Defence Force</h3>
+                    <p>Монголын хамгаалалтын элит хүчин</p>
+                </div>
+                
+                <div class="unit-card">
+                    <div class="unit-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h3>Security Agent (SA)</h3>
+                    <p>Тусгай аюулгүй байдлын агентууд</p>
+                </div>
+                
+                <div class="unit-card">
+                    <div class="unit-icon">
+                        <i class="fas fa-dog"></i>
+                    </div>
+                    <h3>Tactical K9 Unit</h3>
+                    <p>Тактик нохойн элит нэгж</p>
+                </div>
+                
+                <div class="unit-card">
+                    <div class="unit-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h3>Foreign Affairs</h3>
+                    <p>Олон улсын харилцааны тусгай алба</p>
+                </div>
+                
+                <div class="unit-card">
+                    <div class="unit-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Training Bureau (TB)</h3>
+                    <p>Тусгай бэлтгэл, сургалтын төв</p>
+                </div>
+                
+                <div class="unit-card">
+                    <div class="unit-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3>Honor Guard</h3>
+                    <p>Нэр хүндэт хамгаалагчид</p>
+                </div>
+                
+                <div class="unit-card">
+                    <div class="unit-icon">
+                        <i class="fas fa-traffic-light"></i>
+                    </div>
+                    <h3>Traffic Enforcement Division</h3>
+                    <p>Замын хөдөлгөөний тусгай хэлтэс</p>
+                </div>
+                
+                <div class="unit-card">
+                    <div class="unit-icon">
+                        <i class="fas fa-skull-crossbones"></i>
+                    </div>
+                    <h3>SPECIAL WEAPON AND TACTICS</h3>
+                    <p>Тусгай зэвсэг, тактикийн элит нэгж</p>
+                </div>
+                
+                <div class="unit-card">
+                    <div class="unit-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>ДОТООД ДҮРЭМ ЖУРАМ</h3>
+                    <p>Дотоод дүрэм журам, тусгай алба</p>
+                </div>
+                
+                <div class="unit-card">
+                    <div class="unit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>084-р тусгай үүргийн батальон</h3>
+                    <p>Тусгай үүргийн элит батальон</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ranks Section -->
+    <section id="ranks">
+        <div class="container">
+            <div class="section-title">
+                <h2>Цол Зэргийн Систем</h2>
+                <p>MNPD-ийн тактик албан тушаалын систем</p>
+            </div>
+            
+            <div class="ranks-container">
+                <table class="ranks-table">
+                    <thead>
+                        <tr>
+                            <th>Товчлол</th>
+                            <th>Монгол нэр</th>
+                            <th>Англи нэр</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="rank-code">ЦЕД</span></td>
+                            <td>Цагдаагийн Ерөнхий Дарга</td>
+                            <td>Chief of MNPD</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[MSC]</span></td>
+                            <td>Цагдаагийн Ерөнхий Ахлах Дарга</td>
+                            <td>Master Senior Chief</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[SC]</span></td>
+                            <td>Цагдаагийн Ахлах Дарга</td>
+                            <td>Senior Chief</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[DEV]</span></td>
+                            <td>Хөгжүүлэгч</td>
+                            <td>Developer</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[OW]</span></td>
+                            <td>Overwatch</td>
+                            <td>Overwatch</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[DC]</span></td>
+                            <td>Орлогч Дарга</td>
+                            <td>Deputy Chief</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[INS]</span></td>
+                            <td>Байцаагч</td>
+                            <td>Inspector</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[DINS]</span></td>
+                            <td>Орлогч Байцаагч</td>
+                            <td>Deputy Inspector</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[CS]</span></td>
+                            <td>Ерөнхий Хянан Шалгагч</td>
+                            <td>Chief Superintendent</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[SUP]</span></td>
+                            <td>Хянан Шалгах Газарын Дарга</td>
+                            <td>Superintendent</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[COL]</span></td>
+                            <td>Хурандаа</td>
+                            <td>Colonel</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[LTCOL]</span></td>
+                            <td>Дэд Хурандаа</td>
+                            <td>Lieutenant Colonel</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[MAJ]</span></td>
+                            <td>Хошууч</td>
+                            <td>Major</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[CAP]</span></td>
+                            <td>Ахмад</td>
+                            <td>Captain</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[FLT]</span></td>
+                            <td>Ахлах Дэслэгч</td>
+                            <td>First Lieutenant</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[LT]</span></td>
+                            <td>Дэслэгч</td>
+                            <td>Lieutenant</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[SLT]</span></td>
+                            <td>Дэд Дэслэгч</td>
+                            <td>Second Lieutenant</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[CSM]</span></td>
+                            <td>Ерөнхий Ахлагч</td>
+                            <td>Chief Sergeant Major</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[SMJ]</span></td>
+                            <td>Дэд Ахмад Ахлагч</td>
+                            <td>Senior Master Sergeant</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[MSG]</span></td>
+                            <td>Ахмад Ахлагч</td>
+                            <td>Master Sergeant</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[SSGT]</span></td>
+                            <td>Ахлах Ахлагч</td>
+                            <td>Staff Sergeant</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[SGT]</span></td>
+                            <td>Ахлагч</td>
+                            <td>Sergeant</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[JSGT]</span></td>
+                            <td>Дэд Ахлагч</td>
+                            <td>Junior Sergeant</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[CPL]</span></td>
+                            <td>Бага Ахлагч</td>
+                            <td>Corporal</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[DET]</span></td>
+                            <td>Мөрдөн байцаагч</td>
+                            <td>Detective</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[SPO]</span></td>
+                            <td>Ахлагч Цагдаа</td>
+                            <td>Senior Police Officer</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[JPO]</span></td>
+                            <td>Эргүүлийн Цагдаа</td>
+                            <td>Junior Police Officer</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[PO]</span></td>
+                            <td>Цагдаа</td>
+                            <td>Police Officer</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">[PCDT]</span></td>
+                            <td>Цагдаагийн Сонсогч</td>
+                            <td>Police Cadet</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-code">Guest</span></td>
+                            <td>Guest</td>
+                            <td>Guest</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Links Section - Нэгжүүдийн холбоос -->
+    <section id="links">
+        <div class="container">
+            <div class="section-title">
+                <h2>Нэгжүүдийн холбоос</h2>
+                <p>MNPD-ийн бүх нэгжүүдийн Роблокс группүүд</p>
+            </div>
+            
+            <div class="links-container">
+                <!-- Нэгжүүдийн холбоос -->
+                <div class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>084-р Тусгай Үүргийн Батальон</h3>
+                    <p>084-р тусгай үүргийн батальоны Роблокс групп</p>
+                    <a href="https://www.roblox.com/communities/35976836/84STB-084th-Special-Task-Battalion#!/about" class="link-btn" target="_blank">
+                        <i class="fab fa-roblox"></i> Групп рүү очих
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <h3>809-р Тусгай Үүргийн Нэгж</h3>
+                    <p>809-р тусгай үүргийн нэгжийн Роблокс групп</p>
+                    <a href="https://www.roblox.com/communities/1071493695/SMU-809th-Special-Mission-Unit-MNPD#!/about" class="link-btn" target="_blank">
+                        <i class="fab fa-roblox"></i> Групп рүү очих
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Дотоод Дүрэм Журам</h3>
+                    <p>Дотоод дүрэм журам хариуцсан албаны Роблокс групп</p>
+                    <a href="https://www.roblox.com/communities/774002999/Chief-of-Internal-Regulations#!/about" class="link-btn" target="_blank">
+                        <i class="fab fa-roblox"></i> Групп рүү очих
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Монголын Хамгаалалтын Хүчин</h3>
+                    <p>Mongolian Defence Force-ийн Роблокс групп</p>
+                    <a href="https://www.roblox.com/communities/350711035/Mongolian-Defense-Force#!/about" class="link-btn" target="_blank">
+                        <i class="fab fa-roblox"></i> Групп рүү очих
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3>Нэр Хүндэт Хамгаалагчид</h3>
+                    <p>Honor Guard нэгжийн Роблокс групп</p>
+                    <a href="https://www.roblox.com/communities/35993452/HG-Honor-Guard-MNPD#!/about" class="link-btn" target="_blank">
+                        <i class="fab fa-roblox"></i> Групп рүү очих
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-traffic-light"></i>
+                    </div>
+                    <h3>Замын Хөдөлгөөний Хэлтэс</h3>
+                    <p>Traffic Enforcement Division-ийн Роблокс групп</p>
+                    <a href="https://www.roblox.com/communities/35917856/TED-Traffic-Enforcement-Division-MNPD#!/about" class="link-btn" target="_blank">
+                        <i class="fab fa-roblox"></i> Групп рүү очих
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h3>Гадаад Харилцаа</h3>
+                    <p>Foreign Affairs нэгжийн Роблокс групп</p>
+                    <a href="https://www.roblox.com/communities/35823860/FA-Foreign-Affairs-MNPD#!/about" class="link-btn" target="_blank">
+                        <i class="fab fa-roblox"></i> Групп рүү очих
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-dog"></i>
+                    </div>
+                    <h3>Тактик K9 Нэгж</h3>
+                    <p>Tactical K9 Unit-ийн Роблокс групп</p>
+                    <a href="https://www.roblox.com/communities/35780080/K9-Tactical-k9-Unit-MNPD#!/about" class="link-btn" target="_blank">
+                        <i class="fab fa-roblox"></i> Групп рүү очих
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Сургалтын Төв</h3>
+                    <p>Training Bureau-ийн Роблокс групп</p>
+                    <a href="https://www.roblox.com/communities/11359957/TB-Training-Bureau-MNPD#!/about" class="link-btn" target="_blank">
+                        <i class="fab fa-roblox"></i> Групп рүү очих
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-skull-crossbones"></i>
+                    </div>
+                    <h3>Тусгай Зэвсэг, Тактик</h3>
+                    <p>SWAT нэгжийн Роблокс групп</p>
+                    <a href="https://www.roblox.com/communities/32768162/SWAT-Special-Weapon-and-Tactics-MNPD#!/about" class="link-btn" target="_blank">
+                        <i class="fab fa-roblox"></i> Групп рүү очих
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="link-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h3>Аюулгүй Байдлын Агент</h3>
+                    <p>Security Agent нэгжийн Роблокс групп</p>
+                    <a href="https://www.roblox.com/communities/15635758/SA-Security-Agent-MNPD#!/about" class="link-btn" target="_blank">
+                        <i class="fab fa-roblox"></i> Групп рүү очих
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section id="social">
+        <div class="container">
+            <div class="section-title">
+                <h2>Сошиал медиа</h2>
+                <p>MNPD-тэй холбогдох бүх сошиал медиа сувагууд</p>
+            </div>
+            
+            <div class="social-grid">
+                <div class="social-card">
+                    <div class="social-icon tiktok-icon">
+                        <i class="fab fa-tiktok"></i>
+                    </div>
+                    <h3>TikTok</h3>
+                    <p>MNPD-ийн албан ёсны TikTok суваг. Бидний үйл ажиллагаа, мэдээллээр танилцаарай.</p>
+                    <a href="https://www.tiktok.com/@duulga_mnpd" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-tiktok"></i> Суваг руу очих
+                    </a>
+                </div>
+                
+                <div class="social-card">
+                    <div class="social-icon youtube-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <h3>YouTube</h3>
+                    <p>MNPD-ийн албан ёсны YouTube суваг. Бидний видео контентуудыг үзээрэй.</p>
+                    <a href="https://www.youtube.com/@ProjectAven/videos" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-youtube"></i> Суваг руу очих
+                    </a>
+                </div>
+                
+                <div class="social-card">
+                    <div class="social-icon discord-icon">
+                        <i class="fab fa-discord"></i>
+                    </div>
+                    <h3>Discord</h3>
+                    <p>MNPD-ийн албан ёсны Discord сервер. Гишүүдтэйгээ холбогдох, мэдээлэл солилцох газар.</p>
+                    <a href="https://discord.gg/EGWw4pc3" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-discord"></i> Сервер рүү нэгдэх
+                    </a>
+                </div>
+                
+                <div class="social-card">
+                    <div class="social-icon roblox-icon">
+                        <i class="fab fa-roblox"></i>
+                    </div>
+                    <h3>Үндсэн Роблокс групп</h3>
+                    <p>MNPD-ийн үндсэн Роблокс групп. Бүх мэдээлэл, шинэчлэлээс мэдээлэл авах.</p>
+                    <a href="https://www.roblox.com/communities/13179941/Mongolian-National-Police-Department-MNPD#!/about" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-roblox"></i> Групп рүү очих
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section id="leadership">
+        <div class="container">
+            <div class="section-title">
+                <h2>Тусгай хүчний удирдлага</h2>
+                <p>MNPD-ийн элит удирдагчид</p>
+            </div>
+            
+            <div class="leadership-grid">
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="leader-info">
+                        <div class="leader-rank">Цагдаагийн Ерөнхий Дарга</div>
+                        <h3 class="leader-name">Clara090516</h3>
+                        <p>Монголын Үндэсний Цагдаагийн Департаментын ерөнхий дарга, тактик нэгжүүдийн удирдлага, стратегийн төлөвлөлтийг хариуцдаг.</p>
+                        <a href="https://www.roblox.com/users/2243454553/profile" class="leader-link" target="_blank">
+                            <i class="fab fa-roblox"></i> Роблокс профайл
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="leader-card">
+                    <div class="leader-image">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="leader-info">
+                        <div class="leader-rank">Хөгжүүлэгч / Overwatch</div>
+                        <h3 class="leader-name">KingEnkoNGU</h3>
+                        <p>Системийн хөгжүүлэгч, Overwatch тусгай нэгжийн удирдагч, технологийн шийдэл, техникийн тактикийг хариуцдаг.</p>
+                        <a href="https://www.roblox.com/users/4253672047/profile" class="leader-link" target="_blank">
+                            <i class="fab fa-roblox"></i> Роблокс профайл
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>MN<span>PD</span></h3>
+                    <p>Монголын Үндэсний Цагдаагийн Департамент</p>
+                    <p>Олон улсын Роблокс тоглоом дэх Монголын тусгай цагдаагийн хүчин</p>
+                    
+                    <div class="social-links">
+                        <a href="https://www.tiktok.com/@duulga_mnpd" class="social-link" target="_blank">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@ProjectAven/videos" class="social-link" target="_blank">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://discord.gg/EGWw4pc3" class="social-link" target="_blank">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="https://www.roblox.com/communities/13179941/Mongolian-National-Police-Department-MNPD#!/about" class="social-link" target="_blank">
+                            <i class="fab fa-roblox"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Холбоосууд</h4>
+                    <ul>
+                        <li><a href="#home">Нүүр хуудас</a></li>
+                        <li><a href="#units">Нэгжүүд</a></li>
+                        <li><a href="#ranks">Цол зэрэг</a></li>
+                        <li><a href="#leadership">Удирдлага</a></li>
+                        <li><a href="#links">Нэгжүүдийн холбоос</a></li>
+                        <li><a href="#social">Сошиал медиа</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Гол нэгжүүд</h4>
+                    <ul>
+                        <li><a href="#links">084-р Тусгай Үүргийн Батальон</a></li>
+                        <li><a href="#links">809-р Тусгай Үүргийн Нэгж</a></li>
+                        <li><a href="#links">Тусгай Зэвсэг, Тактик (SWAT)</a></li>
+                        <li><a href="#links">Монголын Хамгаалалтын Хүчин</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 MNPD - Монголын Үндэсний Цагдаагийн Департамент. Бүх эрх хуулиар хамгаалагдсан.</p>
+                <p>Энэ вэбсайт нь Роблокс тоглоом дэх тусгай виртуал байгууллагын албан ёсны вэбсайт юм.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.backgroundColor = 'rgba(10, 10, 10, 0.98)';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.5)';
+            } else {
+                header.style.backgroundColor = 'rgba(10, 10, 10, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+        
+        // Add tactical effect to hero section
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            hero.style.backgroundPosition = `center ${rate}px`;
+        });
+    </script>
+</body>
+</html>
